@@ -1,0 +1,9 @@
+{
+	"name": "sarathdatafactory110822",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8d9009b6-4ca6-48d3-a7e7-f66330e14576",
+		"tenantId": "ba3ea352-c3c7-4973-8124-dc63d6214728"
+	}
+}

@@ -1,0 +1,116 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "sales1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sqldatabase",
+						"type": "DatasetReference"
+					},
+					"name": "errortablesink",
+					"rejectedDataLinkedService": {
+						"referenceName": "sarathBlobStorage",
+						"type": "LinkedServiceReference"
+					}
+				},
+				{
+					"dataset": {
+						"referenceName": "sqldatabase",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumnFilenameerror"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          employee_id as string,",
+				"          date as string,",
+				"          quarter as string,",
+				"          bonus as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 split(isNull(toDate(date, 'dd-mm-yyyy')),",
+				"     disjoint: false) ~> split1@(errorrows, goodrows)",
+				"split1@errorrows derive(filename = \"source1.csv\",",
+				"          date = toDate(date, 'DD-MM-YYYY'),",
+				"          quarter = toInteger(quarter),",
+				"          bonus = toInteger(bonus),",
+				"          employee_id = toInteger(employee_id)) ~> derivedColumnFilenameerror",
+				"split1@goodrows derive(employee_id = toInteger(employee_id),",
+				"          date = toDate(date, \"DD-MM-YYYY\"),",
+				"          quarter = toInteger(quarter),",
+				"          bonus = toInteger(bonus),",
+				"          FILENAME = \"SALES1\") ~> derivedColumn1",
+				"derivedColumnFilenameerror sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          employee_id as integer,",
+				"          bonus as integer,",
+				"          filenames as string,",
+				"          DATES as date,",
+				"          QUARTERS as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          employee_id,",
+				"          DATES = date,",
+				"          QUARTERS = quarter,",
+				"          bonus,",
+				"          filenames = filename",
+				"     )) ~> errortablesink",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          employee_id as integer,",
+				"          bonus as integer,",
+				"          filenames as string,",
+				"          DATES as date,",
+				"          QUARTERS as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          employee_id,",
+				"          bonus,",
+				"          filenames = FILENAME,",
+				"          DATES = date,",
+				"          QUARTERS = quarter",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

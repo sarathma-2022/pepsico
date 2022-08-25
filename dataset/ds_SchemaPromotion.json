@@ -1,0 +1,78 @@
+{
+	"name": "ds_SchemaPromotion",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sarathBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Schema_Retailer_Promotion_Schema.csv",
+				"folderPath": "Schema",
+				"container": "sarathcontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "Owner",
+				"type": "String"
+			},
+			{
+				"name": "Cust Id",
+				"type": "String"
+			},
+			{
+				"name": "Primary Customer list code",
+				"type": "String"
+			},
+			{
+				"name": "Cust. Desc.",
+				"type": "String"
+			},
+			{
+				"name": "Event Id",
+				"type": "String"
+			},
+			{
+				"name": "Description",
+				"type": "String"
+			},
+			{
+				"name": "Promo State",
+				"type": "String"
+			},
+			{
+				"name": "From Date",
+				"type": "String"
+			},
+			{
+				"name": "End Date",
+				"type": "String"
+			},
+			{
+				"name": "sdv_per_unit",
+				"type": "String"
+			},
+			{
+				"name": "feat_pr_blended_amt",
+				"type": "String"
+			},
+			{
+				"name": "buy_prod_list_num",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

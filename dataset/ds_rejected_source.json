@@ -1,0 +1,24 @@
+{
+	"name": "ds_rejected_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sarathBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Retailer_Address_book.csv",
+				"folderPath": "input/AddressBook",
+				"container": "sarathcontainer"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

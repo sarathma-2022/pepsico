@@ -1,0 +1,41 @@
+{
+	"name": "sqldatabase",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "employee_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "bonus",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "filenames",
+				"type": "varchar"
+			},
+			{
+				"name": "DATES",
+				"type": "date"
+			},
+			{
+				"name": "QUARTERS",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "sales1"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
